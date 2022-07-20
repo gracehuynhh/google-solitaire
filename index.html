@@ -1,40 +1,4 @@
-<?php
-function callAPI($method, $url, $data)
-{
-  $curl = curl_init();
-  switch ($method) {
-    case "POST":
-      curl_setopt($curl, CURLOPT_POST, 1);
-      if ($data)
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-      break;
-    case "PUT":
-      curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-      if ($data)
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-      break;
-    default:
-      if ($data)
-        $url = sprintf("%s?%s", $url, http_build_query($data));
-  }
-  // OPTIONS:
-  curl_setopt($curl, CURLOPT_URL, $url);
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-    'APIKEY: 111111111111111111111',
-    'Content-Type: application/json',
-  ));
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-  // EXECUTE:
-  $result = curl_exec($curl);
-  curl_close($curl);
-  return $result;
-}
 
-$get_data = callAPI('GET', 'https://antrachhuynh.github.io/data.json', false);
-$gamelist = json_decode($get_data, true);
-
-?>
 <!DOCTYPE html>
 <html>
 
@@ -62,7 +26,7 @@ $gamelist = json_decode($get_data, true);
 
   <link rel="canonical" href="https://solitair.ee" />
   <link rel="home" href="https://solitair.ee/" />
-  <link rel=" shortcut icon" href="favicon.ico" />
+  <link rel="shortcut icon" href="favicon.ico" />
   <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon.ico" />
   <link rel="icon" type="image/png" sizes="180x180" href="images/180.png" />
 
@@ -76,7 +40,20 @@ $gamelist = json_decode($get_data, true);
   <link rel="stylesheet" type="text/css" href="css/mobile_portrait.css" media="only screen and (orientation: portrait)">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/gracehuynhh/doodlejump/w3navigation.css" />
   <link rel="stylesheet" type="text/css" href="css/ipad.css" media="only screen and (min-width : 768px) and (max-width : 1024px)">
-
+   <style>
+       .topbar-mode-indicator{
+           left:100px;
+       }
+       #menuToggle{
+           top:15px!important;
+       }
+          #menu1 li a {
+            display: flex;
+              align-items: center;
+              justify-content: center;
+              gap:5px;
+            }
+   </style> 
 </head>
 
 <body>
@@ -102,25 +79,7 @@ $gamelist = json_decode($get_data, true);
                 </li>
 
 
-                <?php foreach ($gamelist as $item) {
-                  $url = $_SERVER['HTTP_HOST'];
-                  $url_item = $item['link'];
-                  $pos = strpos($url_item, $url);
-
-
-
-                  if ($pos !== false) {
-                    echo '<li class="active"><a href="' . $item['link'] . '" title="' . $item['description'] . '"><img alt="' . $item['description'] . '" class="lazy" data-src="' . $item['thumb'] . '" height="30px" width="30px"> ' . $item['name'] . '</li></a>';
-                    continue;
-                  } else {
-                    echo '<li><a class="inactive" href="' . $item['link'] . '" title="' . $item['description'] . '"><img alt="' . $item['description'] . '" class="lazy" data-src="' . $item['thumb'] . '" height="30px" width="30px"> ' . $item['name'] . '</a></li>';
-                  }
-                }
-
-
-
-                ?>
-
+                <li><a class="inactive" href="https://doodlejump.io/" title="Doodle Jump"><img alt="Doodle Jump" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/doodle-jump.jpeg" height="30px" width="30px"> Doodle Jump</a></li><li><a class="inactive" href="https://flappybird.ee/" title="Flappy Bird"><img alt="Flappy Bird" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/flappy-bird.webp" height="30px" width="30px"> Flappy Bird</a></li><li><a class="inactive" href="https://chromedino.io/" title="Chrome Dino"><img alt="Chrome Dino" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/chrome-dino.webp" height="30px" width="30px"> Chrome Dino</a></li><li><a class="inactive" href="https://playslope.io/" title="Slope Unblocked"><img alt="Slope Unblocked" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/slope.webp" height="30px" width="30px"> Slope Unblocked</a></li><li><a class="inactive" href="https://cookieclicker.ee" title="Cookie Clicker"><img alt="Cookie Clicker" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/cookie-clicker.webp" height="30px" width="30px"> Cookie Clicker</a></li><li><a class="inactive" href="https://retrobowl.ee" title="Retro Bowl"><img alt="Retro Bowl" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/retro-bowl-150x150.webp" height="30px" width="30px"> Retro Bowl</a></li><li><a class="inactive" href="https://supermario.ee/" title="Super Mario"><img alt="Super Mario" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/super-mario.webp" height="30px" width="30px"> Super Mario</a></li><li><a class="inactive" href="https://2048.ee/" title="2048 Original"><img alt="2048 Original" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/2048.webp" height="30px" width="30px"> 2048 Original</a></li><li><a class="inactive" href="https://2048.ee/doge/" title="2048 Doge"><img alt="2048 Doge" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/2048-doge.webp" height="30px" width="30px"> 2048 Doge</a></li><li><a class="inactive" href="https://2048.ee/cupcakes" title="2048 Cupcakes"><img alt="2048 Cupcakes" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/2048-cupcakes.webp" height="30px" width="30px"> 2048 Cupcakes</a></li><li><a class="inactive" href="https://tictactoe.ee/" title="Tic Tac Toe"><img alt="Tic Tac Toe" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/tictactoe.png" height="30px" width="30px"> Tic Tac Toe</a></li><li><a class="inactive" href="https://pacman.ee/" title="Pacman"><img alt="Pacman" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/pacman-150x150.png" height="30px" width="30px"> Pacman</a></li><li><a class="inactive" href="https://pvz.ee" title="Plant vs Zombies"><img alt="Plant vs Zombies" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/pvz.png" height="30px" width="30px"> Plant vs Zombies</a></li><li><a class="inactive" href="https://minesweeper.ee" title="Minesweeper"><img alt="Minesweeper" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/minesweeper.png" height="30px" width="30px"> Minesweeper</a></li><li><a class="inactive" href="https://ponggame.io/" title="Pong Game"><img alt="Pong Game" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/pong-game.webp" height="30px" width="30px"> Pong Game</a></li><li><a class="inactive" href="https://kong.ee" title="Donkey Kong"><img alt="Donkey Kong" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/donkey-kong-150x150.png" height="30px" width="30px"> Donkey Kong</a></li><li><a class="inactive" href="https://sonic.ee" title="Sonic"><img alt="Sonic" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/sonic-150x150.png" height="30px" width="30px"> Sonic</a></li><li><a class="inactive" href="https://invaders.ee" title="Space Invaders"><img alt="Space Invaders" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/invaders-150x150.png" height="30px" width="30px"> Space Invaders</a></li><li><a class="inactive" href="https://galaga.ee" title="Galaga"><img alt="Galaga" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/galaga-150x150.png" height="30px" width="30px"> Galaga</a></li><li><a class="inactive" href="https://frogger.ee" title="Frogger"><img alt="Frogger" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/frogger-150x150.png" height="30px" width="30px"> Frogger</a></li><li><a class="inactive" href="https://aow.ee/" title="Age of War"><img alt="Age of War" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/aow-150x150.png" height="30px" width="30px"> Age of War</a></li><li><a class="inactive" href="https://watersortgame.com/" title="Water Sort"><img alt="Water Sort" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/water-sort.webp" height="30px" width="30px"> Water Sort</a></li><li><a class="inactive" href="https://playwordle.io/" title="Wordle"><img alt="Wordle" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/wordle.webp" height="30px" width="30px"> Wordle</a></li><li><a class="inactive" href="https://freemahjong.io/" title="Free Mahjong"><img alt="Free Mahjong" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/mahjong.webp" height="30px" width="30px"> Free Mahjong</a></li><li><a class="inactive" href="https://chesswai.com/" title="Chess Online"><img alt="Chess Online" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/chess.webp" height="30px" width="30px"> Chess Online</a></li><li><a class="inactive" href="https://templerun.ee/" title="Temple Run 2"><img alt="Temple Run 2" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/temple-run-2.png" height="30px" width="30px"> Temple Run 2</a></li><li><a class="inactive" href="https://subwaysurfers.ee/" title="Subway Surfers"><img alt="Subway Surfers" class="lazy" data-src="https://www.w3technic.com/wp-content/uploads/2022/05/subway-surfers.png" height="30px" width="30px"> Subway Surfers</a></li><li><a class="inactive" href="https://snak.ee/" title="Google Snake"><img alt="Google Snake" class="lazy" data-src="https://snak.ee/180.png" height="30px" width="30px"> Google Snake (New)</a></li><li class="active"><a href="https://solitair.ee" title="Google Solitaire"><img alt="Google Solitaire" class="lazy" data-src="https://solitair.ee/images/180.png" height="30px" width="30px"> Google Solitaire (New)</li></a><li><a class="inactive" href="https://www.vnagame.com" title="Other Games"><img alt="Other Games" class="lazy" data-src="https://vnagame.com/images/login-logo.png" height="30px" width="30px"> Other Games</a></li>
 
 
 
